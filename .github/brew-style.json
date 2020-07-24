@@ -1,0 +1,20 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "brew-style",
+            "pattern": [
+                {   "__comment": "`brew style` (multiline matcher, header)",
+                    "regexp": "== (.+) ==",
+                    "file": 1
+                },
+                {   "__comment": "`brew style` (multiline matcher, body)",
+                    "regexp": "[RCWEF]: (\\d+): (\\d+): (.+)$",
+                    "line": 1,
+                    "column": 2,
+                    "message": 3,
+                    "loop": true
+                }
+            ]
+        }
+    ]
+} 
