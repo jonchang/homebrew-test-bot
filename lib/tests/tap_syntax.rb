@@ -12,7 +12,7 @@ module Homebrew
         return if broken_xcode_rubygems
 
         if ENV["HOMEBREW_GITHUB_ACTIONS"].present?
-          problem_matcher { test "brew", "style", tap.name }
+          problem_matcher("style") { test "brew", "style", tap.name }
         else
           test "brew", "style", tap.name
         end

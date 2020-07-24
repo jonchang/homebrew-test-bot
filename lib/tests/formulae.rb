@@ -544,7 +544,7 @@ module Homebrew
 
       def audit_formula(audit_args)
         if ENV["HOMEBREW_GITHUB_ACTIONS"].present?
-          problem_matcher { test "brew", "audit", *audit_args, "--display-filename" }
+          problem_matcher("audit") { test "brew", "audit", *audit_args, "--display-filename" }
         else
           test "brew", "audit", *audit_args
         end
