@@ -39,5 +39,14 @@ module Homebrew
       @steps << step
       step
     end
+
+    def problem_matcher
+      matcher_json = Tap.fetch("homebrew/test-bot").path/".github/brew-audit.json"
+      FileUtils.cp matcher_json, ENV["GITHUB_WORKSPACE"]
+      puts "::add-matcher::#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
+      yield
+      puts "::remove-matcher owner=brew-audit::"
+      FileUtils.rm "#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
+    end
   end
 end

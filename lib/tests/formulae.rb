@@ -544,12 +544,7 @@ module Homebrew
 
       def audit_formula(audit_args)
         if ENV["HOMEBREW_GITHUB_ACTIONS"].present?
-          matcher_json = Tap.fetch("homebrew/test-bot").path/".github/brew-audit.json"
-          FileUtils.cp matcher_json, ENV["GITHUB_WORKSPACE"]
-          puts "::add-matcher::#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
-          test "brew", "audit", *audit_args, "--display-filename"
-          puts "::remove-matcher owner=brew-audit::"
-          FileUtils.rm "#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
+          problem_matcher { test "brew", "audit", *audit_args, "--display-filename" }
         else
           test "brew", "audit", *audit_args
         end
