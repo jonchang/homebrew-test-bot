@@ -4,7 +4,7 @@
             "owner": "brew-audit",
             "pattern": [
                 {
-                    "regexp": ""regexp": "^(.+): \\* (?:[RCWEF]: (\\d+): )?(?:col (\\d+): )?(.+)$",",
+                    "regexp": "^(.+): \\* (?:[RCWEF]: (\\d+): )?(?:col (\\d+): )?(.+)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,
