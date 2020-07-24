@@ -3,7 +3,7 @@
         {
             "owner": "brew-audit",
             "pattern": [
-                {   "__comment": "`brew audit --display-filename`, regular audits",
+                {
                     "regexp": ""regexp": "^(.+): \\* (?:[RCWEF]: (\\d+): )?(?:col (\\d+): )?(.+)$",",
                     "file": 1,
                     "line": 2,
