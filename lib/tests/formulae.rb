@@ -539,7 +539,20 @@ module Homebrew
 
       def fetch_formula(fetch_args, audit_args, spec_args = [])
         test "brew", "fetch", "--retry", *spec_args, *fetch_args
-        test "brew", "audit", *audit_args
+        audit_formula audit_args
+      end
+
+      def audit_formula(audit_args)
+        if ENV["HOMEBREW_GITHUB_ACTIONS"].present?
+          matcher_json = Tap.fetch("homebrew/test-bot").path/".github/brew-audit.json"
+          FileUtils.cp matcher_json, ENV["GITHUB_WORKSPACE"]
+          puts "::add-matcher::#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
+          test "brew", "audit", *audit_args, "--display-filename"
+          puts "::remove-matcher owner=brew-audit::"
+          FileUtils.rm "#{ENV["GITHUB_WORKSPACE"]}/brew-audit.json"
+        else
+          test "brew", "audit", *audit_args
+        end
       end
 
       def formula!(formula_name)
@@ -599,7 +612,7 @@ module Homebrew
               env: { "HOMEBREW_DEVELOPER" => nil }
         install_passed = steps.last.passed?
 
-        test "brew", "audit", *audit_args
+        audit_formula audit_args
 
         if install_passed
           bottle_reinstall_formula(formula, new_formula)
